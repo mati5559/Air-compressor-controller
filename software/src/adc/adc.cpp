@@ -1,3 +1,9 @@
+/*
+ * config.hpp
+ *
+ * Author: mati5559
+ */
+ 
 #include "adc.hpp"
 
 namespace adc
