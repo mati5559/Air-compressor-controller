@@ -1,14 +1,10 @@
-/*
- * config.hpp
- *
- * Author: mati5559
- */
- 
 #include "motor.hpp"
 
 
 namespace motor
 {
+	unsigned long int working_time = 0;
+
 	int on_time = 0; // Time in us * 2
 
 	int timer2_counter = 0;
@@ -19,14 +15,12 @@ namespace motor
 
 	int state = MOTOR_STATE_OFF;
 
-	unsigned long int working_time = 0;
-
 	void init()
 	{
 		// PD0 as output
 		DDRD |= 0b00000001;
 
-		// Analog comparator
+		// Analog comparator (zero crossing detection)
 		SFIOR &= 0b11110111;
 		ACSR = 0b00001010;
 
@@ -43,6 +37,25 @@ namespace motor
 		TIMSK = 0b10010000;
 	}
 
+	void start()
+	{
+		state = MOTOR_STATE_ON;
+	}
+
+	void stop()
+	{
+		state = MOTOR_STATE_ON;
+	}
+
+	void set_speed_regulator_state(int state)
+	{
+		speed_regulator_state = state;
+	}
+
+	void set_speed_sensor_state(int state)
+	{
+		speed_sensor_state = state;
+	}
 }
 
 
@@ -106,11 +119,13 @@ ISR(TIMER2_COMP_vect)
 		else if(motor::state == MOTOR_STATE_OFF)
 		{
 			integral = 0;
+			prev_error = 0;
+			error = 0;
 			motor::on_time = 0;
 		}
 
 
-		// Turn off and blink overheat LED if motor would be stuck or if speed sensor would be broken
+		// Turn off and blink overheat LED if motor is stuck or if speed sensor is broken
 		if(motor::on_time>9000 && error > 350 && motor::working_time > 400)
 		{
 			motor::on_time = 0;

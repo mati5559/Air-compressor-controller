@@ -15,11 +15,12 @@
 
 namespace motor
 {
-	extern int speed_regulator_state;
-	extern int state;
-	extern int speed_sensor_state;
 	extern unsigned long int working_time;
-	extern void init();
+	void init();
+	void set_speed_regulator_state(int state);
+	void set_speed_sensor_state(int state);
+	void start();
+	void stop();
 }
 
 

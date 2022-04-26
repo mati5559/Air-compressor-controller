@@ -8,13 +8,6 @@
 #define CONFIG_HPP_
 
 
-// It defines how accurate voltage measurements should be
-// 10-15 is optimal value
-// Too high value will slow down uC
-#define SPEED_MEASUREMENT_ACCURACY 10
-#define VOLTAGE_MEASUREMENT_ACCURACY 10
-
-
 
 // Delay between motor off and fan off [ms]
 #define FAN_OFF_DELAY 5000
@@ -29,6 +22,7 @@
 // Max time between zero cross detection and turn on triac [us]
 // It should be lower than 10000 (for 50Hz) because of zero crossing detector imperfection
 #define MAX_TRIAC_DELAY 9000
+
 
 
 

@@ -1,9 +1,3 @@
-/*
- * config.hpp
- *
- * Author: mati5559
- */
- 
 #include "eeprom.hpp"
 
 namespace eeprom
